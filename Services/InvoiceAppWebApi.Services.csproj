@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="8.2.0" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Data\InvoiceAppWebApi.Data.csproj" />
+    <ProjectReference Include="..\FrameworkExtention\InvoiceAppWebApi.FrameworkExtention.csproj" />
+    <ProjectReference Include="..\InvoiceAppWebApi.ViewModel\InvoiceAppWebApi.ViewModel.csproj" />
+  </ItemGroup>
+
+</Project>
