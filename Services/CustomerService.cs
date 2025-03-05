@@ -8,6 +8,7 @@ using InvoiceAppWebApi.Services.ServiceExtentions;
 using InvoiceAppWebApi.ViewModel.Customer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace InvoiceAppWebApi.Services
 {
@@ -16,11 +17,13 @@ namespace InvoiceAppWebApi.Services
         private IUnitOfWork<Customer> _uow;
         private readonly DbSet<Customer> _customer;
         private readonly IMapper _mapper;
-        public CustomerService(IUnitOfWork<Customer> unitOfWork, IMapper mapper, ILogger<ReadBase<Customer, CustomerViewModel>> logger): base(mapper, logger, unitOfWork)
+        private readonly IOptions<ApplicationSettings> _appSettings;
+        public CustomerService(IUnitOfWork<Customer> unitOfWork, IMapper mapper, ILogger<ReadBase<Customer, CustomerViewModel>> logger, IOptions<ApplicationSettings> appSettings) : base(mapper, logger, unitOfWork, appSettings)
         {
             _uow = unitOfWork;
             _mapper = mapper;
             _customer = _uow.Set<Customer>();
+            _appSettings = appSettings;
         }
 
         public override async Task<ServiceResultInfo> CreateAsync(CustomerViewModel modelItem, bool savechange = true)

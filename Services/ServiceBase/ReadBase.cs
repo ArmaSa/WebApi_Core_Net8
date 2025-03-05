@@ -4,6 +4,9 @@ using Microsoft.Extensions.Logging;
 using AutoMapper;
 using InvoiceAppWebApi.Data;
 using InvoiceAppWebApi.FrameworkExtention;
+using System.Runtime;
+using Microsoft.Extensions.Options;
+using InvoiceAppWebApi.Common;
 
 namespace InvoiceAppWebApi.Services.ServiceBase
 {
@@ -14,16 +17,18 @@ namespace InvoiceAppWebApi.Services.ServiceBase
         protected readonly ILogger<ReadBase<TEntity , TModel>> _logger;
         protected readonly DbSet<TEntity> _entities;        
         protected readonly IQueryable<TEntity> _query;
+        protected readonly IOptions<ApplicationSettings> _appSettings;
 
-        public ReadBase(IMapper mapper, ILogger<ReadBase<TEntity, TModel>> logger, IUnitOfWork<TEntity> uow)
+        public ReadBase(IMapper mapper, ILogger<ReadBase<TEntity, TModel>> logger, IUnitOfWork<TEntity> uow, IOptions<ApplicationSettings> appSettings)
         {
             _uow = uow;
             _logger = logger;
             _mapper = mapper;
+            _appSettings = appSettings;
 
             _entities = _uow.Set<TEntity>();
             _query = _entities.AsQueryable();
-          }
+        }
 
         public TModel GetItemByKey(Int64 id ,params string[] includes)
         {

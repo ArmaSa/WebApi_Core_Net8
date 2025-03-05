@@ -6,7 +6,6 @@ using System.Text;
 using System.Security.Claims;
 using InvoiceAppWebApi.Domain;
 using InvoiceAppWebApi.ViewModel;
-using InvoiceAppWebApi.App;
 
 namespace InvoiceAppWebApi.Controllers
 {
@@ -28,7 +27,7 @@ namespace InvoiceAppWebApi.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login([FromQuery] LoginRequestModel model)
         {
             if (!ModelState.IsValid)
@@ -46,9 +45,16 @@ namespace InvoiceAppWebApi.Controllers
             return Ok(new { Token = token });
         }
 
+        [HttpPost("LogOut")]
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return Ok("User logged out!");
+        }
+
         private string GenerateJwtToken(ApplicationUser user)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]

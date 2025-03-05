@@ -9,8 +9,8 @@ using InvoiceAppWebApi.Services.ServiceExtentions;
 using InvoiceAppWebApi.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace InvoiceAppWebApi.Services
 {
@@ -20,7 +20,7 @@ namespace InvoiceAppWebApi.Services
         private readonly DbSet<Payment> _payment;
         private readonly IMapper _mapper;
         private IQueryable<Payment> _query;
-        public PaymentService(IUnitOfWork<Payment> unitOfWork, IMapper mapper, ILogger<ReadBase<Payment, PaymentViewModel>> logger): base(mapper, logger, unitOfWork)
+        public PaymentService(IUnitOfWork<Payment> unitOfWork, IMapper mapper, ILogger<ReadBase<Payment, PaymentViewModel>> logger, IOptions<ApplicationSettings> appSettings) : base(mapper, logger, unitOfWork,appSettings)
         {
             _uow = unitOfWork;
             _mapper = mapper;

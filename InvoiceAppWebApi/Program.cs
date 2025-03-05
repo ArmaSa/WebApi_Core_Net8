@@ -17,6 +17,7 @@ using System.Runtime;
 using System.Net;
 using System.Security.Claims;
 using Microsoft.VisualBasic;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace InvoiceWebApi
 {
@@ -203,6 +204,10 @@ namespace InvoiceWebApi
             {
                 container.AddServices();
             });
+
+         
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddHttpContextAccessor();
 
             var app = builder.Build();
 

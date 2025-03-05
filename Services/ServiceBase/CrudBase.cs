@@ -3,13 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using InvoiceAppWebApi.Data;
 using InvoiceAppWebApi.Common;
 using InvoiceAppWebApi.FrameworkExtention;
+using Microsoft.Extensions.Options;
 
 namespace InvoiceAppWebApi.Services.ServiceBase
 {
     public abstract class CrudBase<TEntity, TModel> : ReadBase<TEntity, TModel>, ICrudBase<TEntity, TModel> where TEntity : class, IKey64 where TModel : class, IKey64
     {
         private Int64 _minimumValue = default(Int64);
-        public CrudBase(AutoMapper.IMapper mapper, ILogger<ReadBase<TEntity, TModel>> logger, IUnitOfWork<TEntity> uow) : base(mapper, logger, uow)
+        public CrudBase(AutoMapper.IMapper mapper, ILogger<ReadBase<TEntity, TModel>> logger, IUnitOfWork<TEntity> uow, IOptions<ApplicationSettings> appSettings) : base(mapper, logger, uow, appSettings)
         {
         }
 

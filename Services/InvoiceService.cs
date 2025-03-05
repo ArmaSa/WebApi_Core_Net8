@@ -9,6 +9,7 @@ using InvoiceAppWebApi.ViewModel;
 using InvoiceAppWebApi.ViewModel.Invoice;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -22,7 +23,7 @@ namespace InvoiceAppWebApi.Services
         private IQueryable<Invoice> _query;
         private ILogger<InvoiceService> _logger;
 
-        public InvoiceService(IUnitOfWork<Invoice> unitOfWork, IMapper mapper, ILogger<InvoiceService> logger): base(mapper, logger, unitOfWork)
+        public InvoiceService(IUnitOfWork<Invoice> unitOfWork, IMapper mapper, ILogger<InvoiceService> logger, IOptions<ApplicationSettings> appSettings) : base(mapper, logger, unitOfWork, appSettings)
         {
             _uow = unitOfWork;
             _mapper = mapper;

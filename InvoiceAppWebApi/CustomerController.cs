@@ -4,17 +4,20 @@ using InvoiceAppWebApi.Services.Interface;
 using InvoiceAppWebApi.ViewModel.Customer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace InvoiceAppWebApi.App
 {
     //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomerController : BaseController
     {
         private readonly ICustomerService _customerService;
         private readonly IMapper _mapper;
-        public CustomerController(ICustomerService customerCrudService, IMapper mapper) 
+        private static IHttpContextAccessor _httpContextAccessor;
+
+        public CustomerController(ICustomerService customerCrudService, IMapper mapper , IOptions<ApplicationSettings> appSetting, IHttpContextAccessor httpContextAccessor) :base(appSetting, httpContextAccessor) 
         {
             _customerService = customerCrudService;
             _mapper = mapper;
